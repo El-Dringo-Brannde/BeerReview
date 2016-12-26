@@ -1,0 +1,62 @@
+<!doctype html>
+<html ng-app="BeerApp">
+  <title>Brewster</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js">
+        </script>
+        <script src="controller.js"></script>
+
+        <style>
+        body{
+          background-image: url(http://i.imgur.com/FQutB29.jpg?2);
+          color: white;
+        }
+        #form, h1{
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
+    </head>
+    <h1>Brewster!</h1>
+
+    <body>
+        <div ng-controller="mainController" id = "form">
+            <form>
+                Beer Name:
+                <input type = "text" ng-model="formData.BeerName" /> <br />
+                Brewer:
+                <input type="text" ng-model = "formData.Brewer" /> <br />
+                Type: <input type = "text" ng-model = "formData.Type" placeholder="E.g(IPA, Lager, Stout, Porter)" /> <br />
+                 Appearance:
+                <input type="text" ng-model="formData.Appearance" placeholder="E.g(Pale,Golden,Cloudy)"/> <br />
+                Smell:
+                <input type="text" ng-model="formData.Smell" placeholder="E.g(Toasty,Caramel,Chocolate,Herbal)" /> <br />
+                Taste:
+                <input type="text" ng-model="formData.Taste" placeholder="E.g(Bitter with a bite at the end" />
+                <br />
+		Picture: <input type = "file" ng-model="formData.Picture"  accept = "image/*" capture = "camera" /> <br />
+                Buy Again? <input type="text" ng-model = "formData.BuyAgain" />
+                <br />
+                <button type="submit" ng-click="AddBeer()">Add A Beer</button>
+            </form>
+            <h1>Previously Reviewed Beers</h1>
+            <p ng-model="formData.BeerName" ng-repeat="Beer in Beers">
+              <font color = "orange">{{Beer.BeerName}} By {{Beer.Brewer}} </font>
+              <br />
+              Type: {{Beer.Type}}<br />
+              Appearance: {{Beer.Appearance}} <br/>
+              Smell: {{Beer.Smell}} <br />
+              Taste: {{Beer.Taste}} <br />
+              Buy? {{Beer.BuyAgain}} <br />
+
+            </p>
+            </divng-controller>
+
+    </body>
+
+
+
+</html>

@@ -37,11 +37,19 @@
                 Taste:
                 <input type="text" ng-model="formData.Taste" placeholder="E.g(Bitter with a bite at the end" />
                 <br />
-		Picture: <input type = "file" ng-model="formData.Picture"  accept = "image/*" capture = "camera" /> <br />
-                Buy Again? <input type="text" ng-model = "formData.BuyAgain" />
+                Buy Again? <input type="text" ng-model = "formData.BuyAgain" onchange="this.form.submit()" />
                 <br />
                 <button type="submit" ng-click="AddBeer()">Add A Beer</button>
             </form>
+
+            <form id        =  "uploadForm"
+       enctype   =  "multipart/form-data"
+       action    =  "/shit"
+       method    =  "post" >
+  <input type="file" name="userPhoto" />
+  <input type="submit" value="Upload Image" name="submit" onchange="this.form.submit()">
+  </form>
+
             <h1>Previously Reviewed Beers</h1>
             <p ng-model="formData.BeerName" ng-repeat="Beer in Beers">
               <font color = "orange">{{Beer.BeerName}} By {{Beer.Brewer}} </font>

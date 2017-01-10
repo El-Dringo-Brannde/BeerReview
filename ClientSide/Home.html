@@ -1,0 +1,139 @@
+<html>
+  <title>Brewster</title>
+  <meta name= "viewport" content= "width=device-width, initial-scale=1, maximum-scale=1 "/>
+  <meta name= "HandheldFriendly" content= "true" />
+  <meta name="MobileOptimized" content="320 " />
+    <head>
+        <style>
+        body{
+          background-image: url(http://i.imgur.com/d6IbCzi.jpg);
+          color: black;
+          text-align: center;
+        }
+        #form, h1{
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        th:nth-child(even){
+          border: 1px solid black;
+          background-color: #95aba7;
+        }
+        th:nth-child(odd){
+          background-color: #decb1f;
+        }
+        table{
+          border: 1px solid black;
+          border-collapse: collapse;
+        }
+        td:nth-child(odd){
+          background-color: #95aba7;
+          border: 1px solid black;
+        }
+        td:nth-child(even){
+          background-color: #decb1f;
+          border: 1px solid black;
+        }
+        td:hover{
+          background-color: white;
+        }
+        </style>
+    </head>
+    <h1>Brewster!</h1>
+
+    <body ng-app="fileUpload">
+      <div ng-controller = "MyCtrl">
+          <form name="form">
+
+
+              BeerName: <input type = "text" ng-model="formData.BeerName" id = "BeerName"/> <br />
+
+                Brewer: <input type="text" ng-model = "formData.Brewer" /> <br />
+
+                Type: <input type = "text" ng-model = "formData.Type" placeholder="E.g(IPA, Lager, Stout, Porter)" /> <br />
+
+                 Appearance: <input type="text" ng-model="formData.Appearance" placeholder="E.g(Pale,Golden,Cloudy)"/> <br />
+
+                Aroma: <input type="text" ng-model="formData.Smell" placeholder="E.g(Toasty,Caramel,Chocolate,Herbal)" /> <br />
+
+                Taste: <input type="text" ng-model="formData.Taste" placeholder="E.g(Bitter with a bite at the end" />
+                <br />
+                Rating? <input type = "text" ng-model = "formData.Rating" placeholder="2/10, 7/10" /> <br  />
+
+                <input type = "hidden" ng-model = "formData.PathToFile" value = "./Uploads/" />
+
+                Buy Again? <input type="text" ng-model = "formData.BuyAgain" />
+                <br />
+                <input type="file" ngf-select ng-model="file"  name="file" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="20MB"/> <br />
+
+                <button type = "submit" ng-click="submit()">Add A Beer</button>
+            </form>
+
+
+            <h1>Previously Reviewed Beers</h1>
+            <p ng-repeat="Beer in Beers">
+              <table style = "width:100%">
+                <tr>
+                  <th>
+                    Beer And Brewery:
+                  </th>
+                  <th>
+                  Type:
+                  </th>
+                  <th>
+                    Appearance:
+                  </th>
+                  <th>
+                    Aroma:
+                  </th>
+                  <th>
+                    Taste:
+                  </th>
+                  <th>
+                    Rating:
+                  </th>
+                  <th>
+                    Buy?
+                  </th>
+                  <th>
+                     Picture:
+                  </th>
+                </tr>
+
+                <tr>
+                  <td>
+              <font color = "blue">{{Beer.BeerName}} By {{Beer.Brewer}} </font>
+              </td>
+              <br />
+              <td>
+              {{Beer.Type}}<br />
+              </td>
+              <td>
+              {{Beer.Appearance}} <br/>
+              </td>
+              <td>
+              {{Beer.Smell}} <br />
+              </td>
+              <td>
+               {{Beer.Taste}} <br />
+              </td>
+              <td>
+                {{Beer.Rating}} <br />
+              </td>
+              <td>
+               {{Beer.BuyAgain}} <br />
+              </td>
+              <td>
+              <img src = "{{Beer.PathToImage}}" height="200" width="200"/>
+              </td>
+            </tr>
+              </table>
+            </p>
+          </div>
+    </body>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+     <script type="text/javascript" src="ng-file-upload.min.js"></script>
+     <script type="text/javascript" src="ng-file-upload-shim.min.js"></script>
+     <script type="text/javascript" src="controller.js"></script>
+</html>

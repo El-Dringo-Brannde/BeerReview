@@ -14,8 +14,8 @@ module.exports = function(app) {
     app.post('/addbeer', function(req, res) {
         console.log(JSON.stringify(req.body));
         console.log("In add beer " + req.body.BeerName);
-        console.log("Path to file: " + "./../UploadedPhotos/" + req.body.BeerName);
-        var FileLocation = "./../UploadedPhotos/" + req.body.BeerName;
+        console.log("Path to file: " + "./Uploads/" + req.body.BeerName);
+        var FileLocation = "./Uploads/" + req.body.BeerName;
         beer.create({
             BeerName: req.body.BeerName,
             Brewer: req.body.Brewer,
@@ -42,15 +42,17 @@ module.exports = function(app) {
 
 
     app.get('/Uploads/:picture', function(req, res) {
-        var ToEdit = "./UploadedPhotos/" + req.params.picture + ".jpg";
+        console.log(req.params);
+        var ToEdit = "./Uploads/" + req.params.picture + ".jpg";
+        console.log("Going to edit " + ToEdit);
         lwip.open(ToEdit, function(err, image) {
             if (err)
                 throw (err);
             else {
                 image.resize(200, 200, //dimensions of what the picture is going to be displayed as
                     function(err, resizedImg) {
-                        var test = ToEdit.substr(17, 100); //grab only the file name, which is the BeerName
-                        var small_pic = "./UploadedPhotos/small_pic_" + test;
+                        var test = ToEdit.substr(10, 100); //grab only the file name, which is the BeerName
+                        var small_pic = "./Uploads/small_pic_" + test;
                         //^^ Rename the photos
                         image.rotate(90, 'white', function(err, image) {
                             resizedImg.writeFile(small_pic, function(err) {

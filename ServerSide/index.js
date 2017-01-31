@@ -44,7 +44,7 @@ mongoose.connect(url, function() {
     console.log("Connected to DB");
 });
 
-app.post('/upload', function(req, res) {
+app.post('/Uploads', function(req, res) {
     console.log("On the serverside");
     console.log(req.body);
     upload(req, res, function(err) {

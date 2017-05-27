@@ -3,7 +3,6 @@ var fs = require('fs');
 var busboy = require('connect-busboy');
 
 var FileUpload = require('express-fileupload');
-var lwip = require('lwip');
 
 
 //Export these routes to the index.js file
@@ -32,8 +31,28 @@ module.exports = function(app) {
         });
     });
 
+    app.post('/upload', function(req, res) {
+        var fstream;
+        console.log("I'm in shit", req);
+        req.pipe(req.busboy);
+        console.log("Doing Stuff..");
+        var file = req.files.file;
+        console.log(file);
+        file.mv("./Uploads/fuck.png", function(err) {
+            if (err) {
+                console.log("Oh nose!", err);
+                res.send(err);
+            } else {
+                console.log("SUCCESS!");
+                res.send(0);
+            }
+        })
+    });
+
+
     app.get('/addbeer', function(req, res) {
-        beer.find(function(err, beers) { //find all beers
+        beer.find(function(err, beers) {
+            console.log(beers);
             if (err)
                 res.send(err)
             res.json(beers);
@@ -41,31 +60,7 @@ module.exports = function(app) {
     });
 
 
-    app.get('/Uploads/:picture', function(req, res) {
-        console.log(req.params);
-        var ToEdit = "./Uploads/" + req.params.picture + ".jpg";
-        console.log("Going to edit " + ToEdit);
-        lwip.open(ToEdit, function(err, image) {
-            if (err)
-                throw (err);
-            else {
-                image.resize(200, 200, //dimensions of what the picture is going to be displayed as
-                    function(err, resizedImg) {
-                        var test = ToEdit.substr(10, 100); //grab only the file name, which is the BeerName
-                        var small_pic = "./Uploads/small_pic_" + test;
-                        //^^ Rename the photos
-                        image.rotate(90, 'white', function(err, image) {
-                            resizedImg.writeFile(small_pic, function(err) {
-                                if (err)
-                                    throw err;
-                                res.sendfile(small_pic);
-                            });
-                        })
-                    })
-            }
 
-        })
-    });
 
 
 

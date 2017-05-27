@@ -22,7 +22,7 @@ module.exports = function(app) {
         });
     });
 
-    app.post('/shit', function(req, res) {
+    app.post('/upload', function(req, res) {
         var fstream;
         console.log("I'm in shit");
         req.pipe(req.busboy);
@@ -39,6 +39,7 @@ module.exports = function(app) {
 
     app.get('/addbeer', function(req, res) {
         beer.find(function(err, beers) {
+            console.log(beers);
             if (err)
                 res.send(err)
             res.json(beers);

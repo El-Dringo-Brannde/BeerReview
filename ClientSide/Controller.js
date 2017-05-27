@@ -27,7 +27,6 @@ angular.module('fileUpload', ['ngFileUpload']).controller('MyCtrl', ['Upload', '
         }).then(function(resp) { //upload function returns a promise
             if (resp.data.error_code === 0) { //validate success
                 $window.alert('Success ' + resp.config.data.file.name + 'uploaded. Response: ');
-
                 $scope.formData = {};
                 $http.get('/addbeer').success(function(data) {
                     $scope.Beers = data;

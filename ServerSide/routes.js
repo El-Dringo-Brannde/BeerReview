@@ -1,90 +1,117 @@
 var beer = require('./../Schemas/models.js');
 var fs = require('fs');
-var busboy = require('connect-busboy');
+var lwip = require('lwip');
 
-var FileUpload = require('express-fileupload');
 
 
 //Export these routes to the index.js file
-module.exports = function(app) {
-    app.use(busboy());
-    app.use(FileUpload());
+module.exports = function(server) {
+    server.register(require('inert'), (err) => {
+        if (err)
+            throw err;
 
-    app.post('/addbeer', function(req, res) {
-        console.log(JSON.stringify(req.body));
-        console.log("In add beer " + req.body.BeerName);
-        console.log("Path to file: " + "./Uploads/" + req.body.BeerName);
-        var FileLocation = "./Uploads/" + req.body.BeerName;
-        beer.create({
-            BeerName: req.body.BeerName,
-            Brewer: req.body.Brewer,
-            Type: req.body.Type,
-            Appearance: req.body.Appearance,
-            Smell: req.body.Smell,
-            Rating: req.body.Rating,
-            Taste: req.body.Taste,
-            BuyAgain: req.body.BuyAgain,
-            PathToImage: FileLocation
-        }, function(err) {
-            if (err)
-                res.send(err);
-        });
-    });
-
-    app.post('/upload', function(req, res) {
-        var fstream;
-        console.log("I'm in shit", req);
-        req.pipe(req.busboy);
-        console.log("Doing Stuff..");
-        var file = req.files.file;
-        console.log(file);
-        file.mv("./Uploads/fuck.png", function(err) {
-            if (err) {
-                console.log("Oh nose!", err);
-                res.send(err);
-            } else {
-                console.log("SUCCESS!");
-                res.send(0);
+        server.route({
+            method: "post",
+            path: "/addbeer",
+            handler: (req, res) => {
+                console.log(req);
+                console.log("In add beer " + req.payload.BeerName);
+                console.log("Path to file: " + "./ServerSide/Uploads/" + req.payload.BeerName);
+                var FileLocation = "./ServerSide/Uploads/" + req.payload.BeerName + ".png";
+                beer.create({
+                    BeerName: req.payload.BeerName,
+                    Brewer: req.payload.Brewer,
+                    Type: req.payload.Type,
+                    Appearance: req.payload.Appearance,
+                    Smell: req.payload.Smell,
+                    Rating: req.payload.Rating,
+                    Taste: req.payload.Taste,
+                    BuyAgain: req.payload.BuyAgain,
+                    PathToImage: FileLocation
+                });
             }
-        })
-    });
-
-
-    app.get('/addbeer', function(req, res) {
-        beer.find(function(err, beers) {
-            console.log(beers);
-            if (err)
-                res.send(err)
-            res.json(beers);
         });
-    });
 
-
-
-
-
-
-    // -------------------------- Serving external JS Files ----------------------
-    app.get('/ng-file-upload.min.js', function(req, res) {
-        res.sendfile('ng-file-upload.min.js', {
-            root: "./../node_modules/ng-file-upload/dist/"
+        server.route({
+            method: "post",
+            path: "/upload",
+            config: {
+                payload: {
+                    output: 'stream',
+                    parse: true,
+                    allow: 'multipart/form-data'
+                }
+            },
+            handler: (req, res) => {
+                var fstream;
+                var file = req.payload.file;
+                var path = "./ServerSide/Uploads/" + req.payload.Name + ".png"
+                var stream = fs.createWriteStream(path);
+                stream.on("error", (err) => {
+                    console.log(err);
+                });
+                file.pipe(stream);
+                file.on('end', function(err) {
+                    res(0);
+                });
+            }
         });
-    });
-    app.get('/ng-file-upload-shim.min.js', function(req, res) {
-        res.sendfile('ng-file-upload-shim.min.js', {
-            root: "./../node_modules/ng-file-upload/dist/"
-        });
-    });
 
-    app.get('/controller.js', function(req, res) {
-        res.sendfile('controller.js', {
-            root: "./../ClientSide/"
+        server.route({
+            method: "get",
+            path: "/ServerSide/Uploads/{picture}",
+            handler: (req, res) => {
+                console.log("HERE!!" + JSON.stringify(req.params));
+                var ToEdit = "./ServerSide/Uploads/" + req.params.picture;
+                console.log("Going to edit " + ToEdit);
+                lwip.open(ToEdit, function(err, image) {
+                    if (err)
+                        console.log(err);
+                    else {
+                        image.resize(200, 200, //dimensions of what the picture is going to be displayed as
+                            function(err, resizedImg) {
+                                var test = ToEdit.substr(21, 100); //grab only the file name, which is the BeerName
+                                var small_pic = "./ServerSide/Uploads/small_pic_" + test;
+                                //^^ Rename the photos
+                                image.rotate(90, 'white', function(err, image) {
+                                    resizedImg.writeFile(small_pic, function(err) {
+                                        if (err)
+                                            throw err;
+                                        res.file(small_pic);
+                                    });
+                                })
+                            })
+                    }
+                });
+            }
         });
-    });
 
-    app.get('/', function(req, res) {
-        res.sendfile('home.html', {
-            root: "./../ClientSide/"
+        server.route({
+            method: "Get",
+            path: "/getbeer",
+            handler: (req, res) => {
+                beer.find(function(err, beers) {
+                    console.log(beers);
+                    if (err)
+                        res(err)
+                    res(beers);
+                });
+            }
+        });
+        server.route({
+            method: "GET",
+            path: "/dependencies/{file}",
+            handler: (req, res) => {
+                console.log("HERE!!");
+                res.file("./ClientSide/" + req.params.file);
+            }
+        });
+        server.route({
+            method: "GET",
+            path: "/",
+            handler: (req, res) => {
+                res.file("./ClientSide/home.html")
+            }
         });
     });
 

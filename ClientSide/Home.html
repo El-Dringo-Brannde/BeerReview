@@ -4,48 +4,12 @@
   <meta name= "HandheldFriendly" content= "true" />
   <meta name="MobileOptimized" content="320 " />
     <head>
-        <style>
-        body{
-          background-image: url(http://i.imgur.com/d6IbCzi.jpg);
-          color: black;
-          text-align: center;
-        }
-        #form, h1{
-          text-align: center;
-          margin-left: auto;
-          margin-right: auto;
-        }
-        th:nth-child(even){
-          border: 1px solid black;
-          background-color: #95aba7;
-        }
-        th:nth-child(odd){
-          background-color: #decb1f;
-        }
-        table{
-          border: 1px solid black;
-          border-collapse: collapse;
-        }
-        td:nth-child(odd){
-          background-color: #95aba7;
-          border: 1px solid black;
-        }
-        td:nth-child(even){
-          background-color: #decb1f;
-          border: 1px solid black;
-        }
-        td:hover{
-          background-color: white;
-        }
-        </style>
+       <link rel="stylesheet" type="text/css" href="dependencies/styling.css">
     </head>
     <h1>Brewster!</h1>
-
     <body ng-app="fileUpload">
       <div ng-controller = "MyCtrl">
           <form name="form">
-
-
               BeerName: <input type = "text" ng-model="formData.BeerName" id = "BeerName"/> <br />
 
                 Brewer: <input type="text" ng-model = "formData.Brewer" /> <br />
@@ -68,11 +32,9 @@
 
                 <button type = "submit" ng-click="submit()">Add A Beer</button>
             </form>
-
-
             <h1>Previously Reviewed Beers</h1>
             <p ng-repeat="Beer in Beers">
-              <table style = "width:100%">
+              <table id = "reviewTable">
                 <tr>
                   <th>
                     Beer And Brewery:
@@ -131,9 +93,8 @@
             </p>
           </div>
     </body>
-
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-     <script type="text/javascript" src="ng-file-upload.min.js"></script>
-     <script type="text/javascript" src="ng-file-upload-shim.min.js"></script>
-     <script type="text/javascript" src="controller.js"></script>
+     <script type="text/javascript" src="dependencies/ng-file-upload.min.js"></script>
+     <script type="text/javascript" src="dependencies/ng-file-upload-shim.min.js"></script>
+     <script type="text/javascript" src="dependencies/controller.js"></script>
 </html>

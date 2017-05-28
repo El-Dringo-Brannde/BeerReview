@@ -3,9 +3,8 @@ var fs = require('fs');
 var lwip = require('lwip');
 
 
-
 //Export these routes to the index.js file
-module.exports = function(server) {
+module.exports = function (server) {
     server.register(require('inert'), (err) => {
         if (err)
             throw err;
@@ -30,7 +29,8 @@ module.exports = function(server) {
                     PathToImage: FileLocation
                 });
             }
-        });
+        })
+        ;
 
         server.route({
             method: "post",
@@ -51,7 +51,7 @@ module.exports = function(server) {
                     console.log(err);
                 });
                 file.pipe(stream);
-                file.on('end', function(err) {
+                file.on('end', function (err) {
                     res(0);
                 });
             }
@@ -59,22 +59,31 @@ module.exports = function(server) {
 
         server.route({
             method: "get",
+            path: "/AddBeer.html",
+            handler: function (req, res) {
+                console.log("Here");
+                res.file("./ClientSide/AddBeer.html");
+            }
+        })
+
+        server.route({
+            method: "get",
             path: "/ServerSide/Uploads/{picture}",
-            handler: (req, res) => {
+            handler: function (req, res) {
                 console.log("HERE!!" + JSON.stringify(req.params));
                 var ToEdit = "./ServerSide/Uploads/" + req.params.picture;
                 console.log("Going to edit " + ToEdit);
-                lwip.open(ToEdit, function(err, image) {
+                lwip.open(ToEdit, function (err, image) {
                     if (err)
                         console.log(err);
                     else {
                         image.resize(200, 200, //dimensions of what the picture is going to be displayed as
-                            function(err, resizedImg) {
+                            function (err, resizedImg) {
                                 var test = ToEdit.substr(21, 100); //grab only the file name, which is the BeerName
                                 var small_pic = "./ServerSide/Uploads/small_pic_" + test;
                                 //^^ Rename the photos
-                                image.rotate(90, 'white', function(err, image) {
-                                    resizedImg.writeFile(small_pic, function(err) {
+                                image.rotate(90, 'white', function (err, image) {
+                                    resizedImg.writeFile(small_pic, function (err) {
                                         if (err)
                                             throw err;
                                         res.file(small_pic);
@@ -84,35 +93,39 @@ module.exports = function(server) {
                     }
                 });
             }
-        });
+        })
+        ;
 
         server.route({
             method: "Get",
             path: "/getbeer",
-            handler: (req, res) => {
-                beer.find(function(err, beers) {
-                    console.log(beers);
+            handler: function (req, res) {
+                beer.find(function (err, beers) {
+                    console.log("HERE!!!");
                     if (err)
                         res(err)
                     res(beers);
                 });
             }
-        });
+        })
+        ;
         server.route({
             method: "GET",
             path: "/dependencies/{file}",
             handler: (req, res) => {
-                console.log("HERE!!");
                 res.file("./ClientSide/" + req.params.file);
             }
-        });
+        })
+        ;
         server.route({
             method: "GET",
             path: "/",
             handler: (req, res) => {
                 res.file("./ClientSide/home.html")
             }
-        });
-    });
+        })
+        ;
+    })
+    ;
 
 };

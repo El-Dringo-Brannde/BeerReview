@@ -2,17 +2,27 @@ angular.module('fileUpload', ['ngFileUpload']).controller('MyCtrl', ['Upload', '
     var vm = $scope;
 
     vm.submit = function() { //function to call on form submit
+        console.log($scope.formData);
+        $scope.formData["Taste"] = $("#Taste").val();
+        $scope.formData["Appearance"] = $("#Appearance").val();
+        $scope.formData["Smell"] = $("#Aroma").val();
+        $scope.formData["Rating"] = $("#RatingVal")[0].value;
+        $scope.formData["BuyAgain"] = $("input:radio[name=buyAgain]:checked").val();
         if (vm.file) { //check if from is valid
             vm.upload(vm.file); //call upload function
         }
-    }
+    };
+
+
 
     $scope.formData = {};
     $http.get('/getbeer').success(function(data) {
+        console.log(data);
         $scope.Beers = data;
     });
 
     vm.upload = function(file) {
+        console.log($scope.formData);
         $http.post('/addbeer', $scope.formData);
 
         Upload.upload({
@@ -23,9 +33,16 @@ angular.module('fileUpload', ['ngFileUpload']).controller('MyCtrl', ['Upload', '
             } //pass file as data, should be user ng-model
         }).then(function(resp) { //upload function returns a promise
             $scope.formData = {};
-            $http.get('/getbeer').success(function(data) {
-                $scope.Beers = data;
-            })
+            $("#Taste")[0].value="";
+            $("#Aroma")[0].value="";
+            $("#Appearance")[0].value="";
+
+
+            /*     $http.get('/getbeer').success(function(data) {
+                     $scope.Beers = data;
+                 })
+                */
+            alert("Beer successfully added!");
         }, function(resp) { //catch error
             console.log('Error status: ' + resp.status);
             $window.alert('Error status: ' + resp.status);

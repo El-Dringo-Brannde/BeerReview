@@ -1,100 +1,119 @@
 <html>
-  <title>Brewster</title>
-  <meta name= "viewport" content= "width=device-width, initial-scale=1, maximum-scale=1 "/>
-  <meta name= "HandheldFriendly" content= "true" />
-  <meta name="MobileOptimized" content="320 " />
-    <head>
-       <link rel="stylesheet" type="text/css" href="dependencies/styling.css">
-    </head>
-    <h1>Brewster!</h1>
-    <body ng-app="fileUpload">
-      <div ng-controller = "MyCtrl">
-          <form name="form">
-              BeerName: <input type = "text" ng-model="formData.BeerName" id = "BeerName"/> <br />
+<title>Brewster</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 "/>
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="MobileOptimized" content="320 "/>
 
-                Brewer: <input type="text" ng-model = "formData.Brewer" /> <br />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="dependencies/styling.css">
 
-                Type: <input type = "text" ng-model = "formData.Type" placeholder="E.g(IPA, Lager, Stout, Porter)" /> <br />
 
-                 Appearance: <input type="text" ng-model="formData.Appearance" placeholder="E.g(Pale,Golden,Cloudy)"/> <br />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-                Aroma: <input type="text" ng-model="formData.Smell" placeholder="E.g(Toasty,Caramel,Chocolate,Herbal)" /> <br />
 
-                Taste: <input type="text" ng-model="formData.Taste" placeholder="E.g(Bitter with a bite at the end" />
-                <br />
-                Rating? <input type = "text" ng-model = "formData.Rating" placeholder="2/10, 7/10" /> <br  />
+    <link rel="stylesheet" type="text/css" href="dependencies/jstarbox.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
 
-                <input type = "hidden" ng-model = "formData.PathToFile" value = "./Uploads/" />
+</head>
+<header id="Header">
+    <h1 id="Intro">Brewster!</h1>
+    <a id="menubtn">&#9776;</a>
+    <button id="crossBtn">&#735;</button>
+    <div id="sidr">
+        <ul>
+            <li><a href="./">Home</a></li>
+            <li class="active"><a href="#">Previous Beers</a></li>
+            <li><a href="./AddBeer.html">Review A Beer</a></li>
+        </ul>
+    </div>
+</header><br/><br/>
+<body ng-app="fileUpload">
+<div ng-controller="MyCtrl">
 
-                Buy Again? <input type="text" ng-model = "formData.BuyAgain" />
-                <br />
-                <input type="file" ngf-select ng-model="file"  name="file" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="20MB"/> <br />
+    <h1>Previously Reviewed Beers</h1>
+    <div ng-repeat="Beer in Beers">
+        <div id="reviewBox">
+            <img src = "{{Beer.PathToImage}}" height="100" width="100"/>
+            <span> {{Beer.BeerName}} BY {{Beer.Brewer}}</span>
 
-                <button type = "submit" ng-click="submit()">Add A Beer</button>
-            </form>
-            <h1>Previously Reviewed Beers</h1>
-            <p ng-repeat="Beer in Beers">
-              <table id = "reviewTable">
-                <tr>
-                  <th>
-                    Beer And Brewery:
-                  </th>
-                  <th>
-                  Type:
-                  </th>
-                  <th>
-                    Appearance:
-                  </th>
-                  <th>
-                    Aroma:
-                  </th>
-                  <th>
-                    Taste:
-                  </th>
-                  <th>
-                    Rating:
-                  </th>
-                  <th>
-                    Buy?
-                  </th>
-                  <th>
-                     Picture:
-                  </th>
-                </tr>
+        </div>
+    </div>
+    <!--table id = "reviewTable">
+      <tr>
+        <th>
+          Beer And Brewery:
+        </th>
+        <th>
+        Type:
+        </th>
+        <th>
+          Appearance:
+        </th>
+        <th>
+          Aroma:
+        </th>
+        <th>
+          Taste:
+        </th>
+        <th>
+          Rating:
+        </th>
+        <th>
+          Buy?
+        </th>
+        <th>
+           Picture:
+        </th>
+      </tr>
 
-                <tr>
-                  <td>
-              <font color = "blue">{{Beer.BeerName}} By {{Beer.Brewer}} </font>
-              </td>
-              <br />
-              <td>
-              {{Beer.Type}}<br />
-              </td>
-              <td>
-              {{Beer.Appearance}} <br/>
-              </td>
-              <td>
-              {{Beer.Smell}} <br />
-              </td>
-              <td>
-               {{Beer.Taste}} <br />
-              </td>
-              <td>
-                {{Beer.Rating}} <br />
-              </td>
-              <td>
-               {{Beer.BuyAgain}} <br />
-              </td>
-              <td>
-              <img src = "{{Beer.PathToImage}}" height="200" width="200"/>
-              </td>
-            </tr>
-              </table>
-            </p>
-          </div>
-    </body>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-     <script type="text/javascript" src="dependencies/ng-file-upload.min.js"></script>
-     <script type="text/javascript" src="dependencies/ng-file-upload-shim.min.js"></script>
-     <script type="text/javascript" src="dependencies/controller.js"></script>
+      <tr>
+        <td>
+    <font color = "blue">{{Beer.BeerName}} By {{Beer.Brewer}} </font>
+    </td>
+    <br />
+    <td>
+    {{Beer.Type}}<br />
+    </td>
+    <td>
+    {{Beer.Appearance}} <br/>
+    </td>
+    <td>
+    {{Beer.Smell}} <br />
+    </td>
+    <td>
+     {{Beer.Taste}} <br />
+    </td>
+    <td>
+      {{Beer.Rating}} <br />
+    </td>
+    <td>
+     {{Beer.BuyAgain}} <br />
+    </td>
+    <td>
+    </td>
+  </tr>
+    </table-->
+
+</div>
+</body>
+<script
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+        crossorigin="anonymous"></script>
+<script src="dependencies/work.js"></script>
+<script src="//cdn.jsdelivr.net/jquery.sidr/2.2.1/jquery.sidr.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="dependencies/ng-file-upload.min.js"></script>
+<script type="text/javascript" src="dependencies/ng-file-upload-shim.min.js"></script>
+<script type="text/javascript" src="dependencies/controller.js"></script>
+<script src="dependencies/jstarbox.js"></script>
+
 </html>

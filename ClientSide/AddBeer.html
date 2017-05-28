@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 "/>
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="MobileOptimized" content="320 "/>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="dependencies/styling.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="dependencies/jstarbox.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
+
+</head>
+<header id="Header">
+    <h1 id="Intro">Brewster!</h1>
+    <a id="menubtn">&#9776;</a>
+    <button id="crossBtn">&#735;</button>
+    <div id="sidr">
+        <ul>
+            <li><a href="./AddBeer.html">Review A Beer</a></li>
+            <li class="active"><a href="#">List 2</a></li>
+            <li><a href="#">List 3</a></li>
+        </ul>
+    </div>
+</header><br/><br/>
+
+
+<body ng-app="fileUpload">
+<div ng-controller="MyCtrl">
+
+    <label class="myLabel">
+        <input type="file" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'" accept="image/*"
+               ngf-max-size="20MB" id="takePicture"/>
+        <span id="pictureText">Take a Picture</span>
+    </label>
+    <span id="BeerName">Beer Name: <input type="text" ng-model="formData.BeerName"/> </span><br/> <br/> <br/>
+    <span id="Brewer">Brewer: <input type="text" ng-model="formData.Brewer"/></span> <br/> <br/> <br/>
+    <div id="divRating">
+        <label>Rating:</label> <br/>
+        <div class="starbox"></div>
+    </div>
+
+    <span id="Type">Type: <br/><input type="text" ng-model="formData.Type"
+                                      placeholder="E.g(IPA, Lager, Stout, Porter)"/> </span><br/><br/>
+    <br/>
+    Appearance: <textarea id="Appearance" rows="2" cols="40" placeholder="E.g(Pale,Golden,Cloudy)"/></textarea> <br/>
+    Aroma: <textarea id="Aroma" rows="2" cols="40" placeholder="E.g(Toasty,Caramel,Chocolate,Herbal)"></textarea> <br/>
+    Taste: <br/><textarea id="Taste" rows="3" cols="40" placeholder="E.g(Bitter with a bite at the end"/></textarea>
+    <br/>
+    <input type="hidden" ng-model="formData.Taste" value=""/>
+    <input type="hidden" ng-model="formData.Appearance" value=""/>
+    <input type="hidden"  ng-model="formData.Smell" value=""/>
+    <input type="hidden" id="RatingVal" ng-model="formData.Rating" value=""/>
+    <input type="hidden" ng-model="formData.PathToFile" value="./Uploads/"/>
+    <input type="hidden" id="buyAgain"ng-model="formData.BuyAgain" value=""/>
+    <br/>
+    Buy Again? <br/>
+    <form>
+            <input type="radio" name="buyAgain" value="Yes" checked> Yes
+            <input type="radio" name="buyAgain" value="No"> No<br>
+    </form>
+    <br/>
+
+    <button type="submit" ng-click="submit()">Add A Beer</button>
+
+</body>
+<script
+        src="https://code.jquery.com/jquery-3.2.1.js"
+        integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+        crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+        crossorigin="anonymous"></script>
+<script src="dependencies/work.js"></script>
+<script src="//cdn.jsdelivr.net/jquery.sidr/2.2.1/jquery.sidr.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="dependencies/ng-file-upload.min.js"></script>
+<script type="text/javascript" src="dependencies/ng-file-upload-shim.min.js"></script>
+<script type="text/javascript" src="dependencies/controller.js"></script>
+<script src="dependencies/jstarbox.js"></script>
+
+</html>

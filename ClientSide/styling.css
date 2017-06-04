@@ -1,0 +1,129 @@
+body{
+  background-image: url(http://i.imgur.com/d6IbCzi.jpg);
+  color: black;
+  text-align: center;
+}
+#form, h1{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+th:nth-child(even){
+  border: 1px solid black;
+  background-color: #95aba7;
+}
+th:nth-child(odd){
+  background-color: #decb1f;
+}
+
+#reviewTable{
+  width: auto;
+}
+#divRating{
+  float:left;
+  position:absolute;
+}
+
+header{
+  width:100%;
+  background:#ffffff;
+  height:40px;
+  border-bottom:1px solid #dddddd;
+  display:inline-block;
+  font-size:12px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+}
+#takePicture{
+  border-radius: 50%;
+  position:absolute;
+  width: 25%;
+  height: 25%;
+}
+
+label.myLabel input[type="file"] {
+  position: fixed;
+  top: -1000px;
+}
+
+/***** Example custom styling *****/
+.myLabel {
+  border: 2px solid #AAA;
+  border-radius: 50%;
+  padding: 2px 5px;
+  margin: 2px;
+  position: absolute;
+  left: 5%;
+  height:100px;
+  width:100px;
+  background: #DDD;
+  display: inline-block;
+}
+#pictureText{
+  top: 40%;
+  left: 5%;
+  position: absolute;
+  margin: 0 auto;
+}
+input[type=text],textarea{
+  border-radius: 10px;
+}
+
+.myLabel:hover {
+  background: #CCC;
+}
+.myLabel:active {
+  background: #CCF;
+}
+.myLabel :invalid + span {
+  color: #A44;
+}
+.myLabel :valid + span {
+  color: #4A4;
+}
+#Intro{
+  top: 0;
+  margin: 0 auto;
+}
+
+#menubtn{
+  background:none;
+  float: right;
+  position: absolute;
+  top: 10px;
+  right: 0;
+  padding: 0px 10px 10px 10px;
+  color:#999;
+  border:0;
+  font-size:1.4em;
+  font-weight:bold;
+  cursor:pointer;
+  outline:none;
+  z-index:10000000000000;
+}
+
+#BeerName,#Brewer{
+  position: absolute;
+  left: 50%;
+}
+
+img{
+  border-radius: 50%;
+}
+
+table{
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+td:nth-child(odd){
+  background-color: #95aba7;
+  border: 1px solid black;
+}
+td:nth-child(even){
+  background-color: #decb1f;
+  border: 1px solid black;
+}
+td:hover{
+  background-color: white;
+}

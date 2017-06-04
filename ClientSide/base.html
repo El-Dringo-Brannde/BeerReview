@@ -1,0 +1,55 @@
+<html ng-app="Brewster">
+<title>Brewster</title>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 "/>
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="MobileOptimized" content="320 "/>
+
+
+    <!-- jquery stuff -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!--Bootstrap Nav Bar -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Angular stuff -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="dependencies/bigController.js"></script>
+
+
+    <script src="fileUpload/ng-file-upload-shim.min.js"></script>
+    <script src="fileUpload/ng-file-upload.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="dependencies/styling.css">
+</head>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Brewster!</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#home">Home</a></li>
+                <li><a href="#previousBeers">Previous Beers</a></li>
+                <li><a href="#AddBeer">Add Beer</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<br/><br/>
+<body ng-app="myController">
+  <div ng-view>
+  </div>
+</body>
+</html>

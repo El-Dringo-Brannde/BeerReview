@@ -1,45 +1,8 @@
-<html>
-<title>Brewster</title>
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 "/>
-    <meta name="HandheldFriendly" content="true"/>
-    <meta name="MobileOptimized" content="320 "/>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" type="text/css" href="dependencies/styling.css">
-
-
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-    <link rel="stylesheet" type="text/css" href="dependencies/jstarbox.css">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.sidr/2.2.1/stylesheets/jquery.sidr.dark.min.css">
-
-</head>
-<header id="Header">
-    <h1 id="Intro">Brewster!</h1>
-    <a id="menubtn">&#9776;</a>
-    <button id="crossBtn">&#735;</button>
-    <div id="sidr">
-        <ul>
-            <li><a href="./">Home</a></li>
-            <li class="active"><a href="#">Previous Beers</a></li>
-            <li><a href="./AddBeer.html">Review A Beer</a></li>
-        </ul>
-    </div>
-</header><br/><br/>
-<body ng-app="fileUpload">
-<div ng-controller="MyCtrl">
-
     <h1>Previously Reviewed Beers</h1>
     <div ng-repeat="Beer in Beers">
         <div id="reviewBox">
             <img src = "{{Beer.PathToImage}}" height="100" width="100"/>
             <span> {{Beer.BeerName}} BY {{Beer.Brewer}}</span>
-
         </div>
     </div>
     <!--table id = "reviewTable">
@@ -108,12 +71,9 @@
         src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
         integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
         crossorigin="anonymous"></script>
-<script src="dependencies/work.js"></script>
 <script src="//cdn.jsdelivr.net/jquery.sidr/2.2.1/jquery.sidr.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script type="text/javascript" src="dependencies/ng-file-upload.min.js"></script>
-<script type="text/javascript" src="dependencies/ng-file-upload-shim.min.js"></script>
-<script type="text/javascript" src="dependencies/controller.js"></script>
-<script src="dependencies/jstarbox.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="dependencies/jstarbox.js"></script>
 
 </html>

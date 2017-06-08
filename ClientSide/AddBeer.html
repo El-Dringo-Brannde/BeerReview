@@ -1,8 +1,9 @@
 <br/>
-<script src="dependencies/loading-bar.js"></script>
 <link rel="stylesheet" type="text/css" href="dependencies/loading.css">
 
 <script src="dependencies/work.js"></script>
+
+
 
 <link rel="stylesheet" type="text/css" href="dependencies/jstarbox.css">
 <script src="dependencies/jstarbox.js"></script>
@@ -39,7 +40,8 @@ Buy Again? <br/>
             <input type="radio" name="buyAgain" value="Yes" checked> Yes
             <input type="radio" name="buyAgain" value="No"> No
             <span id="tab"></span>  <span id="tab"></span>
-            <span class="ld ld-ring ld-spin" id = "spinner"></span>
+            <div id="progressbar"></div>
+
             <button type="submit" ng-model="test" ng-click="submit()" id = "submitter">Add A Beer</button>
         </span>
 </form>
@@ -54,6 +56,9 @@ Buy Again? <br/>
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+
+    $("#progressbar").progressbar({value: 0}).css({display: "inline-block",width: "200px"});
     $("#testing").hide();
     $("#takePicture").change(function () {
         let containerX = $("#imgCont")[0].offsetLeft;

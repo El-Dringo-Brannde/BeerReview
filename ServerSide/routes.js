@@ -1,11 +1,12 @@
-var beer = require('./../Schemas/models.js');
+var beer = require('./../Schemas/beerSchema.js');
+var user = require('./../Schemas/userSchema.js');
 var fs = require('fs');
 var lwip = require('lwip');
-
+var cookies = require("cookies");
 
 //Export these routes to the index.js file
 module.exports = function(server) {
-    server.register(require('inert'), (err) => {
+    server.register(require('inert', 'cookie'), (err) => {
         if (err)
             throw err;
         server.route({
@@ -29,39 +30,51 @@ module.exports = function(server) {
             }
         });
 
+
+        function isEmpty(obj) {
+            // null and undefined are "empty"
+            if (obj == null) return true;
+            // Assume if it has a length property with a non-zero value
+            // that that property is correct.
+            if (obj.length > 0) return false;
+            if (obj.length === 0) return true;
+            // If it isn't an object at this point
+            // it is empty, but it can't be anything *but* empty
+            // Is it empty?  Depends on your application.
+            if (typeof obj !== "object") return true;
+            // Otherwise, does it have any properties of its own?
+            // Note that this doesn't handle
+            // toString and valueOf enumeration bugs in IE < 9
+            for (var key in obj) {
+                if (hasOwnProperty.call(obj, key)) return false;
+            }
+            return true;
+        }
+
         server.route({
             method: "post",
             path: "/upload",
             config: {
-                payload:{
+                payload: {
                     maxBytes: 209715200,
-                    output:'stream',
+                    output: 'stream',
                     parse: true,
                     allow: "multipart/form-data"
                 }
             },
-            handler: function (request, reply) {
+            handler: function(request, reply) {
                 var data = request.payload;
                 if (data.file) {
-                    var name = data.file.hapi.filename;
-                    var path = __dirname + "/uploads/" + name;
+                    var path = __dirname + "/Uploads/" + data.Name + ".jpg";
                     var file = fs.createWriteStream(path);
-
-                    file.on('error', function (err) {
-                        console.error(err)
+                    file.on('error', function(err) {
+                        reply(err);
                     });
-
                     data.file.pipe(file);
-
-                    data.file.on('end', function (err) {
-                        var ret = {
-                            filename: data.file.hapi.filename,
-                            headers: data.file.hapi.headers
-                        }
-                        reply(JSON.stringify(ret));
+                    data.file.on('end', function(err) {
+                        reply(0);
                     })
                 }
-
             }
         });
 
@@ -71,7 +84,6 @@ module.exports = function(server) {
             method: "get",
             path: "/AddBeer.html",
             handler: function(req, res) {
-                console.log("Here");
                 res.file("./ClientSide/AddBeer.html");
             }
         });
@@ -79,7 +91,7 @@ module.exports = function(server) {
         server.route({
             method: "get",
             path: "/fileUpload/{file}",
-            handler: (req,res) =>{
+            handler: (req, res) => {
                 res.file("./node_modules/ng-file-upload/dist/" + req.params.file)
             }
         });
@@ -87,8 +99,10 @@ module.exports = function(server) {
         server.route({
             method: "get",
             path: "/getbeer",
-            handler: (req,res) =>{
-                beer.find(function(err, beers) {
+            handler: (req, res) => {
+                beer.find().sort({
+                    _id: -1
+                }).exec(function(err, beers) {
                     console.log(beers);
                     if (err)
                         res.send(err);
@@ -96,6 +110,7 @@ module.exports = function(server) {
                 });
             }
         });
+
 
         server.route({
             method: "get",
@@ -125,28 +140,81 @@ module.exports = function(server) {
                 });
             }
         });
+
+        server.route({
+            method: "post",
+            path: "/addUser",
+            handler: function(req, res) {
+                var data = req.payload;
+                console.log(data);
+                user.create({
+                    Username: data.username,
+                    Password: data.pass
+                });
+            }
+        });
+
+        server.route({
+            method: "post",
+            path: "/checkNames",
+            handler: function(req, res) {
+                console.log(req.payload);
+                if (req.payload.username == undefined) {
+                    res(-1)
+                    return
+                }
+                var data = (req.payload.username).toString();
+                user.find({
+                        "Username": data
+                    },
+                    function(err, users) {
+                        console.log(users);
+                        if (users.length !== 0)
+                            res(-1)
+                        else
+                            res(0)
+                    });
+            }
+        });
+
+
         server.route({
             method: "get",
             path: "/previousBeers.html",
             handler: function(req, res) {
-                console.log("Here");
                 res.file("./ClientSide/previousBeers.html");
             }
         });
+
+        server.route({
+            method: "get",
+            path: "/login.html",
+            handler: function(req, res) {
+                res.file("./ClientSide/login.html");
+            }
+        });
+
         server.route({
             method: "GET",
             path: "/dependencies/{file}",
             handler: (req, res) => {
-                res.file("./ClientSide/" + req.params.file);
+                res.file("./dependencies/" + req.params.file);
             }
         });
+
+
+
         server.route({
-            method: "GET",
-            path: "/",
-            handler: (req, res) => {
-                res.file("./ClientSide/base.html")
+            method: 'GET',
+            path: '/',
+            config: {
+                handler: function(request, reply) {
+                    if (isEmpty(request.state) === true)
+                        console.log("No Cookies found!");
+                    reply.file("./ClientSide/base.html");
+                }
             }
-        });
+        })
     });
 
 };

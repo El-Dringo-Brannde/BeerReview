@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <!--Bootstrap Nav Bar -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -24,12 +25,20 @@
     <script src="fileUpload/ng-file-upload.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="dependencies/styling.css">
+    <script>
+        $(document).click(function(e){
+            if (e.target.id !== "navBarBtn" && $("#myNavbar")[0].classList.contains("in"))
+                $('#navBarBtn').click(); //bootstrap 2.x
+        });
+
+    </script>
+
 </head>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <button type="button" id = "navBarBtn" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>

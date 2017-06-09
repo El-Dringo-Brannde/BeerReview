@@ -12,7 +12,7 @@ server.connection({
     port: 3000,
     host: '10.0.0.10'
 });
-server.state('session', {
+server.state('user', {
     ttl: 24 * 60 * 60 * 1000,     // One day
     isSecure: false,
 	isHttpOnly: false,

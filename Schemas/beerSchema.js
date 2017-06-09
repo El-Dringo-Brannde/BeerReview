@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 console.log("In the beerSchema file. ");
 module.exports = mongoose.model('Beer', {
+    User: String,
     BeerName: String,
     Brewer: String,
     Type: String,

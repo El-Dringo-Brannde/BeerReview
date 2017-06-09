@@ -14,9 +14,11 @@ module.exports = function(server) {
             path: "/addbeer",
             handler: (req, res) => {
                 console.log("In add beer " + req.payload.BeerName);
+                console.log(req.state);
                 var FileLocation = "./ServerSide/Uploads/" + req.payload.BeerName + ".jpg";
                 console.log(FileLocation);
                 beer.create({
+                    User: req.state.user,
                     BeerName: req.payload.BeerName,
                     Brewer: req.payload.Brewer,
                     Type: req.payload.Type,
@@ -78,15 +80,20 @@ module.exports = function(server) {
             }
         });
 
-
-
         server.route({
-            method: "get",
-            path: "/AddBeer.html",
-            handler: function(req, res) {
-                res.file("./ClientSide/AddBeer.html");
+            method:"get",
+            path:"/checkCookie",
+            handler: function(req,res){
+                console.log(req.state);
+                if (isEmpty(req.state) === true)
+                    res(false);
+                else
+                    res(true);
             }
         });
+
+
+
 
         server.route({
             method: "get",
@@ -100,7 +107,7 @@ module.exports = function(server) {
             method: "get",
             path: "/getbeer",
             handler: (req, res) => {
-                beer.find().sort({
+                beer.find({"User":req.state.user}).sort({
                     _id: -1
                 }).exec(function(err, beers) {
                     console.log(beers);
@@ -151,6 +158,25 @@ module.exports = function(server) {
                     Username: data.username,
                     Password: data.pass
                 });
+                res(0).state("user", data.username);
+            }
+        });
+
+        server.route({
+            method:"post",
+            path:"/checkLogin",
+            handler: function(req,res){
+                console.log(req.payload);
+                user.find({
+                    "Username": (req.payload.user).toString(),
+                    "Password": (req.payload.password).toString()
+                },
+                    function(err,users){
+                        if (users.length === 0)
+                            res(-1);
+                        else
+                            res(0).state("user",req.payload.user);
+                    });
             }
         });
 
@@ -160,7 +186,7 @@ module.exports = function(server) {
             handler: function(req, res) {
                 console.log(req.payload);
                 if (req.payload.username == undefined) {
-                    res(-1)
+                    res(-1);
                     return
                 }
                 var data = (req.payload.username).toString();
@@ -170,19 +196,51 @@ module.exports = function(server) {
                     function(err, users) {
                         console.log(users);
                         if (users.length !== 0)
-                            res(-1)
+                            res(-1);
                         else
                             res(0)
                     });
+            }
+        });
+        server.route({
+            method: "get",
+            path: "/getUser",
+            handler: function(req,res){
+                res(req.state.user);
+            }
+        });
+
+
+        server.route({
+            method: "GET",
+            path: "/dependencies/{file}",
+            handler: (req, res) => {
+                res.file("./dependencies/" + req.params.file);
             }
         });
 
 
         server.route({
             method: "get",
+            path: "/AddBeer.html",
+            handler: function(req, res) {
+                res.file("./ClientSide/AddBeer.html");
+            }
+        });
+
+        server.route({
+            method: "get",
             path: "/previousBeers.html",
             handler: function(req, res) {
                 res.file("./ClientSide/previousBeers.html");
+            }
+        });
+
+        server.route({
+            method: "get",
+            path: "/home.html",
+            handler: function(req, res) {
+                res.file("./ClientSide/home.html");
             }
         });
 
@@ -195,22 +253,10 @@ module.exports = function(server) {
         });
 
         server.route({
-            method: "GET",
-            path: "/dependencies/{file}",
-            handler: (req, res) => {
-                res.file("./dependencies/" + req.params.file);
-            }
-        });
-
-
-
-        server.route({
             method: 'GET',
             path: '/',
             config: {
                 handler: function(request, reply) {
-                    if (isEmpty(request.state) === true)
-                        console.log("No Cookies found!");
                     reply.file("./ClientSide/base.html");
                 }
             }

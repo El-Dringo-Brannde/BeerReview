@@ -7,21 +7,21 @@
         <div class="login-form">
             <div class="sign-in-htm">
                 <div class="group">
-                    <label for="user" class="label">Username</label>
-                    <input id="inuser" type="text" class="input">
+                    <label for="inuser" class="label">Username</label>
+                    <input id="inuser" type="text" class="input" ng-model="user">
                 </div>
                 <div class="group">
                     <label for="pass" class="label">Password</label>
-                    <input id="pass" type="password" class="input" data-type="password">
+                    <input id="pass" type="password" class="input" data-type="password" ng-model="password">
                 </div>
                 <div class="group">
-                    <input type="submit" class="button" value="Sign In">
+                    <input type="submit" class="button" value="Sign In" ng-click="LogInSubmit()">
                 </div>
             </div>
             <form name = "signUpForm">
             <div class="sign-up-htm">
                 <div class="group">
-                    <label for="user" class="label">Username</label>
+                    <label for="upuser" class="label">Username</label>
                     <input id="upuser" type="text" token-input class="input" name="username" ng-model="username" ng-keyup="checkNames(signUpForm)">
                 </div>
                 <span ng-show=" signUpForm.username.$invalid">User name is taken</span>
@@ -35,7 +35,7 @@
                 </div>
                 <span ng-show=" signUpForm.pass2.$invalid">Passwords do not match</span>
                 <div class="group">
-                    <input type="submit" class="button" value="Sign Up" ng-disabled="signUpForm.pass2.$invalid || signUpForm.username.$invalid" ng-click="submit()">
+                    <input type="submit" class="button" value="Sign Up" ng-disabled="signUpForm.pass2.$invalid || signUpForm.username.$invalid" ng-click="SignUpSubmit()">
                 </div>
                 <div class="hr"></div>
                 <div class="foot-lnk">

@@ -12,17 +12,42 @@ homePage.config(function($routeProvider) {
     }).when('/login', {
         templateUrl: "./login.html",
         controller: "loginController"
+    }).when('/logout',{
+        templateUrl: "./login.html",
+        controller: "loginController"
+    }).when('/home',{
+        templateUrl: "./home.html",
+        controller: "homeController"
     }).otherwise({
-        redirectTo: 'base.html',
+        redirectTo: 'base.html'
     });
 });
 
+function checkForCookies($http){
+    $http.get("/checkCookie").success(function(data){
+        console.log(data);
+        if (data == (false).toString())
+            window.location = "#/login";
+    });
+}
+
+homePage.controller("homeController",function($scope, $http){
+    checkForCookies($http);
+   $http.get("/getUser").success(function(data){
+        $scope.User = data;
+   });
+});
+
 homePage.controller("baseController", function() {
+    checkForCookies($http);
+
     console.log("Inside base!");
 });
 
 
 homePage.controller('previousBeersController', function($scope, $http) {
+    checkForCookies($http);
+
     $http.get('/getbeer').success(function(data) {
         $scope.Beers = data;
     });
@@ -33,31 +58,50 @@ homePage.controller("loginController", ['$scope', '$http', function($scope, $htt
         $http.post('/checkNames', {
             "username": $scope.username
         }).success(function(data) {
-            var myEl = angular.element(document.querySelector('#upuser'));
             if (data == -1)
                 form.username.$setValidity("", false);
             else
                 form.username.$setValidity("", true);
         });
-    }
+    };
     $scope.checkPass = function(form) {
-        console.log($scope.formData);
         if ($scope.pass != $scope.pass2)
             form.pass2.$setValidity("", false);
         else
             form.pass2.$setValidity("", true);
-    }
-    $scope.submit = function() {
+    };
+
+    $scope.LogInSubmit = function(){
+        $http.post("/checkLogin",
+            {   "user":$scope.user,
+                "password":$scope.password
+            }).success(function(resp){
+                if(resp == 0)
+                    setTimeout(function(){
+                        window.location = "#/home"
+                    },1000);
+                else{
+                    $scope.user = "";
+                    $scope.password = "";
+                    alert("Invalid Password or Username");
+                }
+        });
+    };
+
+    $scope.SignUpSubmit = function() {
         $http.post('/addUser', {
             "username": $scope.username,
             "pass": $scope.pass
         });
+        setTimeout(function(){
+            window.location = "#/home"
+        },1000);
     }
 
 }]);
 
 homePage.controller('addBeersController', ['Upload', '$window', '$scope', '$http', function(Upload, $window, $scope, $http) {
-
+    checkForCookies($http);
     $("#progressbar").hide();
     console.log("I'm in add beer controller");
 
@@ -101,7 +145,7 @@ homePage.controller('addBeersController', ['Upload', '$window', '$scope', '$http
             $("#progressbar").hide();
         }, function(evt) {
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-            $("#progressbar").progressbar("option", "value", progressPercentage);
+            $("#progressbar").progressbar("option", "value", progressPercentage).css("color","blue");
         });
     };
 

@@ -1,6 +1,8 @@
 body{
-  background-image: url(http://i.imgur.com/d6IbCzi.jpg);
-  color: black;
+  background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(http://www.wallpaperup.com/uploads/wallpapers/2014/02/05/248120/beb1027d3ddcb1e1920270f9ae258b94.jpg);
+
+
+  color: white;
   text-align: center;
 }
 
@@ -137,9 +139,20 @@ input[type=text],textarea{
   position: absolute;
   left: 50%;
 }
+#progressbar{
+  color: blue;
+}
 
 img{
   border-radius: 50%;
+}
+
+#logo{
+  border-radius: 0%;
+  height: 40px;
+  width: 150px;
+  position: absolute;
+  top: 5px;
 }
 
 table{

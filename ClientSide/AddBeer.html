@@ -1,6 +1,11 @@
 <br/>
 <link rel="stylesheet" type="text/css" href="dependencies/loading.css">
 
+<!-- jquery stuff -->
+<script src="dependencies/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" href="dependencies/jquery-ui.min.css">
+<script src="dependencies/jquery-ui.min.js"></script>
+
 <script src="dependencies/work.js"></script>
 
 
@@ -14,19 +19,19 @@
     <span id="pictureText">Take a Picture</span>
     <img id="testing" src="#"/>
 </label>
-<span id="BeerName">Beer Name: <input type="text" ng-model="formData.BeerName"/> </span><br/> <br/> <br/>
-<span id="Brewer">Brewer: <input type="text" ng-model="formData.Brewer"/></span> <br/> <br/> <br/>
+<span id="BeerName">Beer Name: <input type="text" ng-model="formData.BeerName" style="color: black;"/> </span><br/> <br/> <br/>
+<span id="Brewer">Brewer: <input type="text" ng-model="formData.Brewer" style="color: black;"/></span> <br/> <br/> <br/>
 <div id="divRating">
     <label>Rating:</label> <br/>
     <div class="starbox"></div>
 </div>
 
 <span id="Type">Type: <br/><input type="text" ng-model="formData.Type"
-                                  placeholder="E.g(IPA, Lager, Stout, Porter)"/> </span><br/><br/>
+                                  placeholder="E.g(IPA, Lager, Stout, Porter)" style="color: black;"/> </span><br/><br/>
 <br/>
-Appearance: <br/> <textarea id="Appearance" rows="2" cols="40" placeholder="E.g(Pale,Golden,Cloudy)"/></textarea> <br/>
-Aroma: <br/><textarea id="Aroma" rows="2" cols="40" placeholder="E.g(Toasty,Caramel,Chocolate,Herbal)"></textarea> <br/>
-Taste: <br/><textarea id="Taste" rows="3" cols="40" placeholder="E.g(Bitter with a bite at the end"/></textarea>
+Appearance: <br/> <textarea id="Appearance" rows="2" cols="40" placeholder="E.g(Pale,Golden,Cloudy)" style="color: black;"/></textarea> <br/>
+Aroma: <br/><textarea id="Aroma" rows="2" cols="40" placeholder="E.g(Toasty,Caramel,Chocolate,Herbal)" style="color: black;"></textarea> <br/>
+Taste: <br/><textarea id="Taste" rows="3" cols="40" placeholder="E.g(Bitter with a bite at the end" style="color: black;"/></textarea>
 <br/>
 <input type="hidden" ng-model="formData.Taste" value=""/>
 <input type="hidden" ng-model="formData.Appearance" value=""/>
@@ -42,7 +47,7 @@ Buy Again? <br/>
             <span id="tab"></span>  <span id="tab"></span>
             <div id="progressbar"></div>
 
-            <button type="submit" ng-model="test" ng-click="submit()" id = "submitter">Add A Beer</button>
+            <button type="submit" ng-model="test" ng-click="submit()" id = "submitter" style="color:black;">Add A Beer</button>
         </span>
 </form>
 
@@ -61,9 +66,8 @@ Buy Again? <br/>
     $("#progressbar").progressbar({value: 0}).css({display: "inline-block",width: "200px"});
     $("#testing").hide();
     $("#takePicture").change(function () {
-        let containerX = $("#imgCont")[0].offsetLeft;
-        let containerY = $("#imgCont")[0].offsetTop;
         $("#testing").show().css({
+            transform: "rotate(90deg)",
             height: "100px",
             width: "100px",
             position: "relative",

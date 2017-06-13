@@ -1,0 +1,64 @@
+<html ng-app="Brewster">
+<title>Brewster</title>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 "/>
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="MobileOptimized" content="320 "/>
+
+
+    <!-- jquery stuff -->
+    <script src="dependencies/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="dependencies/jquery-ui.min.css">
+    <script src="dependencies/jquery-ui.min.js"></script>
+
+    <!--Bootstrap Nav Bar -->
+    <link rel="stylesheet" href="dependencies/boostrap.min.css">
+    <script src="dependencies/boostrap.min.js"></script>
+
+    <!-- Angular stuff -->
+    <script src="dependencies/angular.min.js"></script>
+    <script src="dependencies/angular-route.min.js"></script>
+    <script src="dependencies/bigController.js"></script>
+
+
+    <script src="fileUpload/ng-file-upload-shim.min.js"></script>
+    <script src="fileUpload/ng-file-upload.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="dependencies/styling.css">
+    <script>
+        $(document).click(function(e){
+            if (e.target.id !== "navBarBtn" && $("#myNavbar")[0].classList.contains("in"))
+                $('#navBarBtn').click(); //bootstrap 2.x
+        });
+    </script>
+
+</head>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" id = "navBarBtn" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#home"><img src="http://i.imgur.com/K1mnIA9.png" id="logo"/> </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#home">Home</a></li>
+                <li><a href="#previousBeers">Previous Beers</a></li>
+                <li><a href="#AddBeer">Add Beer</a></li>
+                <li><a href="#logout">logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<br/><br/>
+<body ng-app="myController">
+  <div ng-view>
+  </div>
+</body>
+</html>

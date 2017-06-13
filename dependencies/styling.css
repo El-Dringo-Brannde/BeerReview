@@ -1,8 +1,12 @@
 body{
-  background-image: url(http://i.imgur.com/d6IbCzi.jpg);
-  color: black;
+  background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(http://www.wallpaperup.com/uploads/wallpapers/2014/02/05/248120/beb1027d3ddcb1e1920270f9ae258b94.jpg);
+
+
+  color: white;
   text-align: center;
 }
+
+
 #form, h1{
   text-align: center;
   margin-left: auto;
@@ -14,6 +18,11 @@ th:nth-child(even){
 }
 th:nth-child(odd){
   background-color: #decb1f;
+}
+
+#tab {
+  display:inline-block;
+  margin-left: 40px;
 }
 
 #reviewTable{
@@ -37,9 +46,32 @@ header{
 }
 #takePicture{
   border-radius: 50%;
-  position:absolute;
+  position:relative;
   width: 25%;
   height: 25%;
+}
+
+.Rating{
+  position: relative;
+  top: 50%;
+  left: -50%;
+}
+
+#beerPic{
+  position: relative;
+  float: left;
+  top: 10%;
+}
+
+.reviewBox{
+  float: left;
+  position: static;
+  height: 175px;
+  width: 100%;
+  background: linear-gradient(to bottom, rgba(255,0,0,0), rgba(133, 110, 98, 0.38));
+  box-shadow: 10px 10px 5px #888888;
+  border: solid;
+
 }
 
 label.myLabel input[type="file"] {
@@ -107,9 +139,20 @@ input[type=text],textarea{
   position: absolute;
   left: 50%;
 }
+#progressbar{
+  color: blue;
+}
 
 img{
   border-radius: 50%;
+}
+
+#logo{
+  border-radius: 0%;
+  height: 40px;
+  width: 150px;
+  position: absolute;
+  top: 5px;
 }
 
 table{
@@ -127,3 +170,7 @@ td:nth-child(even){
 td:hover{
   background-color: white;
 }
+
+
+
+

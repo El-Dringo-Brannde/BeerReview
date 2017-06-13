@@ -1,0 +1,14 @@
+<h1>Previously Reviewed Beers</h1>
+<div ng-repeat="Beer in Beers">
+
+    <div class="reviewBox">
+        <img src = "{{Beer.PathToImage}}" height="100" width="100" id = "beerPic"/>
+        <h4 id = "BeerBy"> {{Beer.BeerName}} BY {{Beer.Brewer}}</h4>
+        <div class = "Rating">Rating: {{Beer.Rating}}/5</div>
+        <span id ="type"> Type: {{Beer.Type}}</span><br/>
+        <span id ="Look"> Appearance: {{Beer.Appearance}}</span><br/>
+        <span id ="Smell"> Aroma: {{Beer.Appearance}}</span><br/>
+        <span id ="Taste"> Taste: {{Beer.Taste}} </span>
+    </div>
+    <br/>
+</div>

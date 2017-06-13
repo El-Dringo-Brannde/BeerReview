@@ -22,3 +22,8 @@
   "homepage": "https://github.com/El-Dringo-Brannde/BeerReview#readme",
   "dependencies": {
     "fs": "0.0.1-security",
+    "hapi": "^16.1.1",
+    "inert": "^4.2.0",
+    "mongoose": "^4.10.3"
+  }
+}
